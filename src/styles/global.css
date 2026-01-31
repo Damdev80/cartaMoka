@@ -4,4 +4,21 @@
     --color-primary: oklch(57% 0.24 196deg);
     --color-secondary: oklch(64% 0.33 34deg);
     --color-tertiary: oklch(0% 0 0deg);
+    --font-rubik: "Rubik", sans-serif;
+}
+
+@font-face {
+    font-family: "Rubik";
+    src: url("/fonts/Rubik-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Rubik";
+    src: url("/fonts/Rubik-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
 }
