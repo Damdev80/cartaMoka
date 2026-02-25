@@ -81,28 +81,61 @@ export function getStaticPaths() {
 const { data } = Astro.props
 ---
 <Layout>
-      <main class="min-h-screen bg-primary flex flex-col items-center justify-center p-8">
-    <a href="/" class="text-white mb-4 hover:underline">&larr; Volver al menú</a>
+  <main class="min-h-screen bg-tertiary flex flex-col">
     
-    <img 
-      src={data.image} 
-      alt={data.name} 
-      transition:name={`product-img-${data.id}`}
-      class="w-80 h-80 object-cover rounded-2xl"
-    />
+    <!-- Imagen hero con overlay y botón volver -->
+    <div class="relative w-full aspect-square max-h-[65vh] overflow-hidden">
+      <img 
+        src={data.image} 
+        alt={data.name} 
+        transition:name={`product-img-${data.id}`}
+        loading="eager"
+        decoding="sync"
+        class="w-full h-full rounded-2xl object-contain"
+      />
 
-    <h1 
-      transition:name={`product-title-${data.id}`}
-      class="text-3xl font-bold text-white mt-6"
-    >
-      {data.name}
-    </h1>
+      <!-- Degradado sobre la imagen -->
+      <div class="absolute inset-0 bg-gradient-to-t from-tertiary via-transparent to-tertiary/60"></div>
 
-    <p 
-      transition:name={`product-price-${data.id}`}
-      class="text-xl text-white mt-2"
-    >
-      ${data.price}
-    </p>
+      <!-- Botón volver flotante -->
+      <a 
+        href="/" 
+        class="absolute top-4 left-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-sm text-white/80 hover:text-white hover:bg-black/60 transition-all duration-200"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </a>
+    </div>
+
+    <!-- Info del producto -->
+    <div class="flex flex-col gap-3 px-5 -mt-8 relative z-10 pb-28">
+      <h1 
+        transition:name={`product-title-${data.id}`}
+        class="text-2xl font-bold text-white leading-tight"
+      >
+        {data.name}
+      </h1>
+
+      <p 
+        transition:name={`product-price-${data.id}`}
+        class="text-white/50 font-extrabold text-3xl"
+      >
+        ${data.price}
+      </p>
+
+      <p class="text-white/30 text-sm leading-relaxed mt-2">
+        Producto preparado al momento con los mejores ingredientes. 
+        Disponible para consumo en el local.
+      </p>
+    </div>
+
+    <!-- Botón fijo abajo -->
+    <div class="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-tertiary via-tertiary to-transparent pt-8">
+      <button class="w-full py-4 bg-white text-tertiary font-bold text-base rounded-2xl active:scale-95 transition-transform duration-150">
+        Ordenar ahora
+      </button>
+    </div>
+
   </main>
 </Layout>
