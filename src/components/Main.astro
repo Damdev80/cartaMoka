@@ -3,7 +3,7 @@ import Card from "./Card.astro";
 import { datas } from "../pages/producto/[id].astro";
 ---
 
-<main class="w-full min-h-screen bg-tertiary px-4 py-12">
+<main id="productos" class="w-full min-h-screen bg-tertiary px-4 py-12">
     <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {datas.map((item) => (
             <Card
