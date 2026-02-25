@@ -1,23 +1,39 @@
 ---
+interface Props {
+  title: string;
+  price: number;
+  image: string;
+  button: string;
+  id: number;
 
-const data: string[] {
-    
 }
-const { title, description, image, button } = Astro.props;
-
+const { title, price, image, button, id } = Astro.props as Props;
 ---
 
-<div class="w-full rounded overflow-hidden shadow-lg bg-white">
-    <img class="w-full h-48 object-cover" src={image} alt={title} />
-    <div class="px-4 py-3 sm:px-6 sm:py-4">
-        <div class="font-bold text-lg sm:text-xl mb-2 text-primary">{title}</div>
-        <p class="text-gray-700 text-sm sm:text-base">
-            {description}
-        </p>
+<a href={`/producto/${id}`} class="block">
+  <div class="bg-white rounded-2xl overflow-hidden">
+    <img 
+      src={image} 
+      alt={title} 
+      transition:name={`product-img-${id}`}
+      class="w-full h-64 object-cover"
+    />
+    <div class="p-4">
+      <h3 
+        transition:name={`product-title-${id}`}
+        class="text-lg font-bold"
+      >
+        {title}
+      </h3>
+      <p 
+        transition:name={`product-price-${id}`}
+        class="text-gray-600"
+      >
+        ${price}
+      </p>
+      <button class="mt-2 bg-primary text-white px-4 py-2 rounded-lg w-full">
+        {button}
+      </button>
     </div>
-    <div class="px-4 pt-3 pb-2 sm:px-6 sm:pt-4 sm:pb-2">
-        <button class="w-full sm:w-auto bg-black hover:bg-primary text-white font-bold py-2 px-4 rounded text-sm sm:text-base transition-colors">
-            {button}
-        </button>
-    </div>
-</div>
+  </div>
+</a>

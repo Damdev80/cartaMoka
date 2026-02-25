@@ -1,0 +1,108 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+interface MokaProduct {
+  id: number;
+  name: string;
+  image: string;
+  price: string;
+}
+
+export const datas: MokaProduct[] = [
+  {
+    id: 1,
+    name: "Hamburguesa Moka Chep",
+    image: "/img/moka/HAMBURGUESA MOKA CHEP.PNG",
+    price: "0"
+  },
+  {
+    id: 2,
+    name: "Hamburguesa Moka Doble Carne",
+    image: "/img/moka/HAMBURGUESA MOKA DOBLE CARNE.PNG",
+    price: "0"
+  },
+  {
+    id: 3,
+    name: "Jugo de Mora",
+    image: "/img/moka/JUGOO DE MORA.png",
+    price: "0"
+  },
+  {
+    id: 4,
+    name: "Limonada de Coco",
+    image: "/img/moka/LIMONADA DE COCO.png",
+    price: "0"
+  },
+  {
+    id: 5,
+    name: "Maracuyá",
+    image: "/img/moka/MARACUYA.png",
+    price: "0"
+  },
+  {
+    id: 6,
+    name: "Milo Frío",
+    image: "/img/moka/MILO FRIO.png",
+    price: "0"
+  },
+  {
+    id: 7,
+    name: "Pasta Carbonara",
+    image: "/img/moka/PASTA CARBONARA.PNG",
+    price: "0"
+  },
+  {
+    id: 8,
+    name: "Pastas de la Casa",
+    image: "/img/moka/PASTAS DE LA CASA.PNG",
+    price: "0"
+  },
+  {
+    id: 9,
+    name: "Pastas Especial Moka",
+    image: "/img/moka/PASTAS ESPECIAL MOKA.PNG",
+    price: "0"
+  },
+  {
+    id: 10,
+    name: "Pastas Pollo Champiñón",
+    image: "/img/moka/PASTAS POLLO CHAMPIÑON.PNG",
+    price: "0"
+  }
+];
+
+export function getStaticPaths() {
+    return datas.map((data) => ({
+        params: { id: data.id.toString() },
+        props: { data }
+    }))
+}
+
+const { data } = Astro.props
+---
+<Layout>
+      <main class="min-h-screen bg-primary flex flex-col items-center justify-center p-8">
+    <a href="/" class="text-white mb-4 hover:underline">&larr; Volver al menú</a>
+    
+    <img 
+      src={data.image} 
+      alt={data.name} 
+      transition:name={`product-img-${data.id}`}
+      class="w-80 h-80 object-cover rounded-2xl"
+    />
+
+    <h1 
+      transition:name={`product-title-${data.id}`}
+      class="text-3xl font-bold text-white mt-6"
+    >
+      {data.name}
+    </h1>
+
+    <p 
+      transition:name={`product-price-${data.id}`}
+      class="text-xl text-white mt-2"
+    >
+      ${data.price}
+    </p>
+  </main>
+</Layout>
