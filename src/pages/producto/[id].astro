@@ -81,10 +81,10 @@ export function getStaticPaths() {
 const { data } = Astro.props
 ---
 <Layout>
-  <main class="min-h-screen bg-tertiary flex flex-col">
+  <main class="min-h-screen bg-tertiary flex flex-col justify-center ">
     
     <!-- Imagen hero con overlay y botón volver -->
-    <div class="relative w-full aspect-square max-h-[65vh] overflow-hidden">
+    <div class="relative w-full aspect-square max-h-[70vh] overflow-hidden">
       <img 
         src={data.image} 
         alt={data.name} 
