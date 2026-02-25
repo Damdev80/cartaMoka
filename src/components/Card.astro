@@ -1,45 +1,44 @@
 ---
-import { Image } from 'astro:assets';
-
 interface Props {
   title: string;
   price: number;
   image: string;
-  button: string;
   id: number;
-
 }
-const { title, price, image, button, id } = Astro.props as Props;
+const { title, price, image, id } = Astro.props as Props;
 ---
 
-<a href={`/producto/${id}`} class="block">
-  <div class="bg-white rounded-sm overflow-hidden">
-    <Image 
+<a href={`/producto/${id}`} class="group block">
+  <div class="relative overflow-hidden rounded-2xl">
+    <!-- Imagen -->
+    <img 
       src={image} 
       alt={title} 
       transition:name={`product-img-${id}`}
       loading="lazy"
       decoding="async"
       width="320"
-      height="256"
-      class="w-full h-64 object-cover"
+      height="320"
+      class="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
     />
-    <div class="p-4">
+
+    <!-- Overlay degradado -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+
+    <!-- Info sobre la imagen -->
+    <div class="absolute bottom-0 left-0 right-0 p-4">
       <h3 
         transition:name={`product-title-${id}`}
-        class="text-lg font-bold"
+        class="text-white font-bold text-base leading-tight"
       >
         {title}
       </h3>
       <p 
         transition:name={`product-price-${id}`}
-        class="text-gray-600"
+        class="text-white/50 font-extrabold text-lg mt-1"
       >
         ${price}
       </p>
-      <button class="mt-2 bg-primary text-white px-4 py-2 rounded-lg w-full">
-        {button}
-      </button>
     </div>
   </div>
 </a>
