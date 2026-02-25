@@ -95,7 +95,7 @@ const { data } = Astro.props
       />
 
       <!-- Degradado sobre la imagen -->
-      <div class="absolute inset-0 bg-gradient-to-t from-tertiary via-transparent to-tertiary/60"></div>
+      <div class="absolute inset-0 bg-linear-to-t from-tertiary via-transparent to-tertiary/60"></div>
 
       <!-- Botón volver flotante -->
       <a 
@@ -131,11 +131,6 @@ const { data } = Astro.props
     </div>
 
     <!-- Botón fijo abajo -->
-    <div class="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-tertiary via-tertiary to-transparent pt-8">
-      <button class="w-full py-4 bg-white text-tertiary font-bold text-base rounded-2xl active:scale-95 transition-transform duration-150">
-        Ordenar ahora
-      </button>
-    </div>
 
   </main>
 </Layout>
