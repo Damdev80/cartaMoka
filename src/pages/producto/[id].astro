@@ -6,68 +6,154 @@ interface MokaProduct {
   name: string;
   image: string;
   price: string;
+  categoria: string;
 }
 
 export const datas: MokaProduct[] = [
+    // Hamburguesas
     {
         id: 1,
         name: "Hamburguesa Moka Chep",
         image: "/img/moka/HAMBURGUESA MOKA CHEP.PNG",
-        price: "8.50"
+        price: "8.50",
+        categoria: "Hamburguesas"
     },
     {
         id: 2,
         name: "Hamburguesa Moka Doble Carne",
         image: "/img/moka/HAMBURGUESA MOKA DOBLE CARNE.PNG",
-        price: "12.99"
+        price: "12.99",
+        categoria: "Hamburguesas"
     },
-    {
-        id: 3,
-        name: "Jugo de Mora",
-        image: "/img/moka/JUGOO DE MORA.png",
-        price: "3.25"
-    },
-    {
-        id: 4,
-        name: "Limonada de Coco",
-        image: "/img/moka/LIMONADA DE COCO.png",
-        price: "3.75"
-    },
-    {
-        id: 5,
-        name: "Maracuyá",
-        image: "/img/moka/MARACUYA.png",
-        price: "3.50"
-    },
-    {
-        id: 6,
-        name: "Milo Frío",
-        image: "/img/moka/MILO FRIO.png",
-        price: "2.99"
-    },
+    // Pastas
     {
         id: 7,
         name: "Pasta Carbonara",
         image: "/img/moka/PASTA CARBONARA.PNG",
-        price: "9.75"
+        price: "9.75",
+        categoria: "Pastas"
     },
     {
         id: 8,
         name: "Pastas de la Casa",
         image: "/img/moka/PASTAS DE LA CASA.PNG",
-        price: "10.25"
+        price: "10.25",
+        categoria: "Pastas"
     },
     {
         id: 9,
         name: "Pastas Especial Moka",
         image: "/img/moka/PASTAS ESPECIAL MOKA.PNG",
-        price: "11.50"
+        price: "11.50",
+        categoria: "Pastas"
     },
     {
         id: 10,
         name: "Pastas Pollo Champiñón",
         image: "/img/moka/PASTAS POLLO CHAMPIÑON.PNG",
-        price: "10.99"
+        price: "10.99",
+        categoria: "Pastas"
+    },
+    // Sandwiches y Comida Rápida
+    {
+        id: 11,
+        name: "Sandwich de Pollo",
+        image: "/img/moka/SANDWICH DE POLLO.PNG",
+        price: "6.50",
+        categoria: "Sandwiches"
+    },
+    {
+        id: 12,
+        name: "Sandwich Tres Quesos",
+        image: "/img/moka/SANDWICH TRES QUESO.png",
+        price: "6.99",
+        categoria: "Sandwiches"
+    },
+    {
+        id: 13,
+        name: "Empanada de Pollo",
+        image: "/img/moka/EMPANADA DE POLLO.png",
+        price: "2.50",
+        categoria: "Sandwiches"
+    },
+    {
+        id: 14,
+        name: "Panzerotti de Pollo",
+        image: "/img/moka/PANZEROTTI DE POLLO.png",
+        price: "3.50",
+        categoria: "Sandwiches"
+    },
+    {
+        id: 15,
+        name: "Deditos de Queso",
+        image: "/img/moka/DEDITOS DE QUESO.png",
+        price: "4.25",
+        categoria: "Sandwiches"
+    },
+    // Bebidas Frías
+    {
+        id: 3,
+        name: "Jugo de Mora",
+        image: "/img/moka/JUGOO DE MORA.png",
+        price: "3.25",
+        categoria: "Bebidas Frías"
+    },
+    {
+        id: 4,
+        name: "Limonada de Coco",
+        image: "/img/moka/LIMONADA DE COCO.png",
+        price: "3.75",
+        categoria: "Bebidas Frías"
+    },
+    {
+        id: 5,
+        name: "Maracuyá",
+        image: "/img/moka/MARACUYA.png",
+        price: "3.50",
+        categoria: "Bebidas Frías"
+    },
+    {
+        id: 6,
+        name: "Milo Frío",
+        image: "/img/moka/MILO FRIO.png",
+        price: "2.99",
+        categoria: "Bebidas Frías"
+    },
+    // Bebidas Calientes
+    {
+        id: 16,
+        name: "Café Americano",
+        image: "/img/moka/CAFE AMERCIANO.JPG",
+        price: "2.50",
+        categoria: "Bebidas Calientes"
+    },
+    {
+        id: 17,
+        name: "Capuchino",
+        image: "/img/moka/CAPUCHINO.JPG",
+        price: "3.00",
+        categoria: "Bebidas Calientes"
+    },
+    {
+        id: 18,
+        name: "Capuchino de Vainilla",
+        image: "/img/moka/CAPUCHINO DE VAINILLA..JPG",
+        price: "3.50",
+        categoria: "Bebidas Calientes"
+    },
+    {
+        id: 19,
+        name: "Chocolate Caliente",
+        image: "/img/moka/CHOCOLATE.jpg",
+        price: "2.75",
+        categoria: "Bebidas Calientes"
+    },
+    {
+        id: 20,
+        name: "Tinto",
+        image: "/img/moka/TINTO.jpg",
+        price: "1.50",
+        categoria: "Bebidas Calientes"
     }
 ];
 
@@ -99,7 +185,7 @@ const { data } = Astro.props
 
       <!-- Botón volver flotante -->
       <a 
-        href="/" 
+        href="/#productos" 
         class="absolute top-4 left-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-sm text-white/80 hover:text-white hover:bg-black/60 transition-all duration-200"
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
