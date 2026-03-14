@@ -5,7 +5,7 @@ import { animate } from "animejs"
 
 <header class="w-full h-screen bg-tertiary flex flex-col justify-center items-center">
 
-  <div id="stars-container" class="">
+  <div id="stars-container" class="absolute inset-0 overflow-hidden">
 
   </div>
 
@@ -33,7 +33,12 @@ import { animate } from "animejs"
 
 <script>
   import { initStarField} from "../utils/stars";
+  import { initShooting } from "../utils/shooringStart";
 
   initStarField();
-  document.addEventListener('astro:after-swap', () => initStarField());
+  initShooting();
+  document.addEventListener('astro:after-swap', () => {
+    initStarField();
+    initShooting();
+  });
 </script>
