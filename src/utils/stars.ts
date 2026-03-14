@@ -5,7 +5,7 @@ interface StarConfig {
 }
 
 const DEFAULT_CONFIG: StarConfig = {
-  count: 150,
+  count: 200,
   shootingInterval: 4000,
   containerId: 'stars-container'
 };

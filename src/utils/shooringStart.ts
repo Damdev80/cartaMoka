@@ -6,8 +6,8 @@ interface CometConfig {
 
 const DEFAULT_CONFIG: CometConfig = {
   containerId: 'stars-container',
-  frequency: 5000,
-  delay: 800
+  frequency: 10000,
+  delay: 200
 };
 
 function createComet(container: HTMLElement): void {
