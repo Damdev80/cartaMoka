@@ -1,12 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 
+interface ComboOption {
+  name: string;
+  price: string;
+}
+
 interface MokaProduct {
   id: number;
   name: string;
   image: string;
   price: string;
   categoria: string;
+  combo?: ComboOption[];
 }
 
 export const datas: MokaProduct[] = [
@@ -16,14 +22,22 @@ export const datas: MokaProduct[] = [
         name: "Hamburguesa Moka Chep",
         image: "/img/moka/HAMBURGUESA MOKA CHEP.PNG",
         price: "8.50",
-        categoria: "Hamburguesas"
+        categoria: "Hamburguesas",
+        combo: [
+            { name: "Sin papas", price: "8.50" },
+            { name: "Con papas", price: "11.50" }
+        ]
     },
     {
         id: 2,
         name: "Hamburguesa Moka Doble Carne",
         image: "/img/moka/HAMBURGUESA MOKA DOBLE CARNE.PNG",
         price: "12.99",
-        categoria: "Hamburguesas"
+        categoria: "Hamburguesas",
+        combo: [
+            { name: "Sin papas", price: "12.99" },
+            { name: "Con papas", price: "15.99" }
+        ]
     },
     // Pastas
     {
@@ -209,6 +223,20 @@ const { data } = Astro.props
       >
         ${data.price}
       </p>
+
+      {data.combo && (
+        <div class="mt-6 border-t border-white/20 pt-6">
+          <h3 class="text-white font-bold text-lg mb-4">Opciones de Combo</h3>
+          <div class="flex flex-col gap-3">
+            {data.combo.map((option) => (
+              <div class="flex justify-between items-center bg-primary/10 rounded-lg p-4 border border-primary/30">
+                <span class="text-white font-semibold">{option.name}</span>
+                <span class="text-primary font-bold text-lg">${option.price}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <p class="text-white/30 text-sm leading-relaxed mt-2">
         Producto preparado al momento con los mejores ingredientes. 
