@@ -9,14 +9,17 @@ const categorias = ["Todas", ...Array.from(new Set(datas.map(item => item.catego
 <main id="productos" class="w-full min-h-screen bg-tertiary px-4 py-12">
     <div class="max-w-6xl mx-auto">
         <!-- Filtros de Categoría -->
-        <div class="mb-8 flex flex-wrap gap-3 justify-center">
+        <div id="categorias-filtros" class="mb-12 flex flex-wrap gap-3 justify-center">
             {categorias.map((categoria) => (
                 <button 
                     data-categoria={categoria}
-                    class="filtro-btn px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 hover:scale-105 active:scale-95
-                           bg-primary/20 text-primary hover:bg-primary hover:text-white
-                           data-[active=true]:bg-primary data-[active=true]:text-white"
+                    class="filtro-btn px-6 py-3 rounded-full font-semibold text-sm transition-all duration-200 cursor-pointer
+                           bg-primary/20 text-primary hover:bg-primary hover:text-white hover:shadow-lg
+                           data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:shadow-lg
+                           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-tertiary
+                           active:scale-95 min-h-12"
                     data-active={categoria === "Todas" ? "true" : "false"}
+                    aria-pressed={categoria === "Todas" ? "true" : "false"}
                 >
                     {categoria}
                 </button>
@@ -40,56 +43,98 @@ const categorias = ["Todas", ...Array.from(new Set(datas.map(item => item.catego
 </main>
 
 <script>
-    // Función para inicializar los filtros
-    function initFiltros() {
-        const filtros = document.querySelectorAll('.filtro-btn');
+    function applyFilter(selectedCategory) {
         const productos = document.querySelectorAll('.producto-item');
 
-        filtros.forEach(filtro => {
-            filtro.addEventListener('click', () => {
-                const categoriaSeleccionada = filtro.getAttribute('data-categoria');
+        productos.forEach((producto) => {
+            const categoriaProducto = producto.getAttribute('data-categoria');
+            const shouldShow = selectedCategory === 'Todas' || categoriaProducto === selectedCategory;
+            const productoElement = producto;
 
-                // Actualizar botones activos
-                filtros.forEach(btn => btn.setAttribute('data-active', 'false'));
-                filtro.setAttribute('data-active', 'true');
+            productoElement.toggleAttribute('hidden', !shouldShow);
 
-                // Filtrar productos
-                productos.forEach(producto => {
-                    const categoriaProducto = producto.getAttribute('data-categoria');
-                    const productoElement = producto as HTMLElement;
-                    
-                    if (categoriaSeleccionada === 'Todas' || categoriaProducto === categoriaSeleccionada) {
-                        productoElement.style.display = 'block';
-                        // Animación de entrada
-                        productoElement.style.animation = 'fadeIn 0.3s ease-in-out';
-                    } else {
-                        productoElement.style.display = 'none';
-                    }
+            if (shouldShow) {
+                productoElement.classList.remove('fade-in');
+                requestAnimationFrame(() => {
+                    productoElement.classList.add('fade-in');
                 });
-            });
+            } else {
+                productoElement.classList.remove('fade-in');
+            }
         });
     }
 
-    // Inicializar en carga inicial
+    function bindFilters() {
+        const filtrosContainer = document.getElementById('categorias-filtros');
+        if (!filtrosContainer || filtrosContainer.dataset.bound === 'true') {
+            return;
+        }
+
+        filtrosContainer.dataset.bound = 'true';
+
+        filtrosContainer.addEventListener('click', (event) => {
+            const target = event.target;
+            if (!(target instanceof Element)) {
+                return;
+            }
+
+            const filtro = target.closest('.filtro-btn');
+            if (!(filtro instanceof HTMLElement)) {
+                return;
+            }
+
+            const categoriaSeleccionada = filtro.dataset.categoria ?? 'Todas';
+            const filtros = filtrosContainer.querySelectorAll('.filtro-btn');
+
+            filtros.forEach((btn) => {
+                const isActive = btn === filtro;
+                btn.setAttribute('data-active', String(isActive));
+                btn.setAttribute('aria-pressed', String(isActive));
+            });
+
+            applyFilter(categoriaSeleccionada);
+        });
+    }
+
+    function scrollToProductsIfNeeded() {
+        if (window.location.hash !== '#productos') {
+            return;
+        }
+
+        const productosSection = document.getElementById('productos');
+        if (!productosSection) {
+            return;
+        }
+
+        setTimeout(() => {
+            productosSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 80);
+    }
+
+    function initFiltros() {
+        bindFilters();
+        scrollToProductsIfNeeded();
+    }
+
     initFiltros();
 
-    // Reinicializar después de cada navegación con view transitions
-    document.addEventListener('astro:page-load', () => {
-        initFiltros();
-        
-        // Si hay hash en la URL (ej: /#productos), hacer scroll suave
-        if (window.location.hash === '#productos') {
-            setTimeout(() => {
-                const productosSection = document.getElementById('productos');
-                if (productosSection) {
-                    productosSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }, 100);
-        }
-    });
+    document.addEventListener('astro:page-load', initFiltros);
 </script>
 
 <style>
+    .producto-item {
+        content-visibility: auto;
+        contain-intrinsic-size: 320px;
+    }
+
+    .producto-item[hidden] {
+        display: none;
+    }
+
+    .producto-item.fade-in {
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
     @keyframes fadeIn {
         from {
             opacity: 0;

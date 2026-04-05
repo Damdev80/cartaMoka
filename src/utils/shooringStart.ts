@@ -2,61 +2,196 @@ interface CometConfig {
   containerId: string;
   frequency: number; // cada cuantos ms aparece un cometa
   delay: number; // ms antes de que aparezca el primer cometa
+  maxActive: number;
 }
 
 const DEFAULT_CONFIG: CometConfig = {
   containerId: 'stars-container',
-  frequency: 10000,
-  delay: 200
+  frequency: 9000,
+  delay: 900,
+  maxActive: 2
 };
 
+const MIN_INTERVAL_MS = 1800;
+const JITTER_MS = 1800;
+
+const activeComets = new Set<HTMLDivElement>();
+
+let cometStartTimeoutId: number | undefined;
+let cometLoopTimeoutId: number | undefined;
+let activeConfig: CometConfig = DEFAULT_CONFIG;
+let isRunning = false;
+let visibilityHandlerAttached = false;
+
+function clearCometTimers(): void {
+  if (cometStartTimeoutId !== undefined) {
+    window.clearTimeout(cometStartTimeoutId);
+    cometStartTimeoutId = undefined;
+  }
+
+  if (cometLoopTimeoutId !== undefined) {
+    window.clearTimeout(cometLoopTimeoutId);
+    cometLoopTimeoutId = undefined;
+  }
+}
+
+function getContainer(): HTMLElement | null {
+  return document.getElementById(activeConfig.containerId);
+}
+
+function removeComet(comet: HTMLDivElement): void {
+  activeComets.delete(comet);
+  comet.remove();
+}
+
+function removeAllComets(): void {
+  activeComets.forEach((comet) => {
+    comet.remove();
+  });
+  activeComets.clear();
+
+  // Limpieza defensiva por si quedaron elementos fuera del Set.
+  const container = getContainer();
+  container?.querySelectorAll('.comet').forEach((comet) => comet.remove());
+}
+
+function getAdaptiveFrequency(baseFrequency: number): number {
+  const cpuThreads = navigator.hardwareConcurrency ?? 8;
+  const isLowEnd = cpuThreads <= 4;
+
+  return isLowEnd ? Math.round(baseFrequency * 1.25) : baseFrequency;
+}
+
 function createComet(container: HTMLElement): void {
-  const durationS = Math.random() * 0.8 + 0.8; // Más rápido: 0.8-1.6s
+  if (activeComets.size >= activeConfig.maxActive) {
+    return;
+  }
+
+  const durationS = Math.random() * 1 + 1.6;
   const isMobile = window.innerWidth < 768;
-  
-  // En móviles empieza más arriba
-  const startY = isMobile 
-    ? Math.random() * 25 + 5  // 5-30% en móviles (más arriba)
-    : Math.random() * 30 + 8; // 8-38% en desktop (más arriba)
+
+  const startY = isMobile
+    ? Math.random() * 18 + 6
+    : Math.random() * 22 + 8;
+  const travelX = isMobile ? 95 + Math.random() * 20 : 110 + Math.random() * 25;
+  const travelY = isMobile ? 25 + Math.random() * 16 : 35 + Math.random() * 18;
+  const size = isMobile ? Math.random() * 1.8 + 3.4 : Math.random() * 2.2 + 4.2;
+  const trailLength = isMobile ? Math.random() * 22 + 34 : Math.random() * 30 + 45;
+  const angle = Math.atan2(travelY, travelX) * (180 / Math.PI);
 
   const comet = document.createElement('div');
   comet.classList.add('comet');
-  comet.classList.toggle('comet-mobile', isMobile);
   comet.style.top = `${startY}%`;
   comet.style.setProperty('--duration', `${durationS}s`);
+  comet.style.setProperty('--travel-x', `${travelX}vw`);
+  comet.style.setProperty('--travel-y', `${travelY}vh`);
+  comet.style.setProperty('--comet-size', `${size}px`);
+  comet.style.setProperty('--trail-length', `${trailLength}px`);
+  comet.style.setProperty('--angle', `${angle}deg`);
 
-  // Crear estela
-  const trail = document.createElement('div');
-  trail.classList.add('comet-trail');
-  comet.appendChild(trail);
-
-  // Crear destello central
-  const core = document.createElement('div');
-  core.classList.add('comet-core');
-  comet.appendChild(core);
+  comet.addEventListener('animationend', () => {
+    removeComet(comet);
+  }, { once: true });
 
   container.appendChild(comet);
+  activeComets.add(comet);
+}
 
-  // Eliminar el cometa después de la animación
-  const duration = durationS * 1000;
-  setTimeout(() => {
-    comet.remove();
-  }, duration + 100);
+function scheduleNextComet(): void {
+  if (!isRunning) {
+    return;
+  }
+
+  const adaptiveFrequency = getAdaptiveFrequency(activeConfig.frequency);
+  const variance = Math.random() * JITTER_MS;
+  const timeoutMs = Math.max(MIN_INTERVAL_MS, adaptiveFrequency + variance);
+
+  cometLoopTimeoutId = window.setTimeout(() => {
+    if (!isRunning) {
+      return;
+    }
+
+    if (document.visibilityState !== 'hidden') {
+      const container = getContainer();
+      if (container) {
+        createComet(container);
+      }
+    }
+
+    scheduleNextComet();
+  }, timeoutMs);
+}
+
+function onVisibilityChange(): void {
+  if (!isRunning) {
+    return;
+  }
+
+  if (document.visibilityState === 'hidden') {
+    clearCometTimers();
+    return;
+  }
+
+  clearCometTimers();
+
+  const container = getContainer();
+  if (!container) {
+    return;
+  }
+
+  createComet(container);
+  scheduleNextComet();
+}
+
+function ensureVisibilityHandler(): void {
+  if (visibilityHandlerAttached) {
+    return;
+  }
+
+  document.addEventListener('visibilitychange', onVisibilityChange);
+  visibilityHandlerAttached = true;
+}
+
+function removeVisibilityHandler(): void {
+  if (!visibilityHandlerAttached) {
+    return;
+  }
+
+  document.removeEventListener('visibilitychange', onVisibilityChange);
+  visibilityHandlerAttached = false;
+}
+
+export function destroyShooting(): void {
+  isRunning = false;
+  clearCometTimers();
+  removeVisibilityHandler();
+  removeAllComets();
 }
 
 export function initShooting(config: Partial<CometConfig> = {}): void {
-  const { containerId, frequency, delay } = { ...DEFAULT_CONFIG, ...config };
-  const container = document.getElementById(containerId);
+  const nextConfig = { ...DEFAULT_CONFIG, ...config };
+  const container = document.getElementById(nextConfig.containerId);
 
   if (!container) return;
 
-  // Primer cometa después del delay
-  setTimeout(() => {
-    createComet(container);
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    destroyShooting();
+    return;
+  }
 
-    // Luego crear cometas periódicamente
-    setInterval(() => {
-      createComet(container);
-    }, frequency);
-  }, delay);
+  destroyShooting();
+
+  activeConfig = nextConfig;
+  isRunning = true;
+  ensureVisibilityHandler();
+
+  // Primer cometa después del delay
+  cometStartTimeoutId = window.setTimeout(() => {
+    if (!isRunning || document.visibilityState === 'hidden') {
+      return;
+    }
+
+    createComet(container);
+    scheduleNextComet();
+  }, activeConfig.delay);
 }

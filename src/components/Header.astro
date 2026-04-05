@@ -1,27 +1,30 @@
 ---
 import '../styles/global.css';
-import { animate } from "animejs"
 ---
 
 <header class="w-full h-screen bg-tertiary flex flex-col justify-center items-center">
 
-  <div id="stars-container" class="absolute inset-0 overflow-hidden">
+  <div id="stars-container" class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
 
   </div>
 
-  <div class="w-96 h-96 mt-5 logo-fade">
+  <div class="w-96 h-96 mt-5">
     <img
-    src="/moka_logo.png" 
+      src="/moka_logo.png"
       alt="CafeMoka logo" 
-      transition:animate="fade"
+      transition:animate="none"
       loading="eager"
-      decoding="sync"
+      decoding="async"
+      fetchpriority="high"
+      width="384"
+      height="384"
     >
   </div>
   <div>
     <a 
       href="#productos" 
-      class="flex flex-col items-center gap-2 text-white/60 transition-colors duration-500 animate-bounce header-bounce"
+      class="flex flex-col items-center gap-2 text-white/60 hover:text-secondary transition-colors duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary rounded-lg p-3"
+      aria-label="Ir al menú de productos"
     >
       <span class="text-sm font-medium tracking-widest uppercase">Menú</span>
       <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -32,48 +35,87 @@ import { animate } from "animejs"
 </header>
 
 <style>
-  .logo-fade {
-    animation: smoothFadeIn 1.2s ease-out;
-    transition: opacity 0.6s ease-in-out;
-  }
-
-  .header-bounce {
-    animation: smoothBounce 2s infinite;
-  }
-
-  @keyframes smoothFadeIn {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  @keyframes smoothBounce {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-12px);
-    }
-  }
 </style>
 
 <script>
-  import { initStarField} from "../utils/stars";
-  import { initShooting } from "../utils/shooringStart";
+  import { initStarField, destroyStarField } from "../utils/stars";
+  import { initShooting, destroyShooting } from "../utils/shooringStart";
 
-  function initializeHeader() {
-    initStarField();
-    initShooting();
+  function getHeaderSkyState() {
+    const globalWindow = window;
+    const existingState = globalWindow.__mokaHeaderSkyState;
+    if (existingState) {
+      return existingState;
+    }
+
+    globalWindow.__mokaHeaderSkyState = {
+      observer: undefined
+    };
+
+    return globalWindow.__mokaHeaderSkyState;
   }
 
-  initializeHeader();
-  
-  document.addEventListener('astro:after-swap', () => {
-    initializeHeader();
-  });
+  function setupHeaderSky() {
+    const header = document.querySelector('header');
+    const starsContainer = document.getElementById('stars-container');
+
+    if (!header || !starsContainer) {
+      return;
+    }
+
+    const state = getHeaderSkyState();
+
+    if (state.observer) {
+      state.observer.disconnect();
+      state.observer = undefined;
+    }
+
+    initStarField({ containerId: 'stars-container' });
+
+    if ('IntersectionObserver' in window) {
+      state.observer = new IntersectionObserver((entries) => {
+        const isVisible = entries[0]?.isIntersecting ?? false;
+
+        if (isVisible) {
+          initShooting({ containerId: 'stars-container', delay: 300 });
+          return;
+        }
+
+        destroyShooting();
+      }, {
+        threshold: 0.12
+      });
+
+      state.observer.observe(header);
+      return;
+    }
+
+    initShooting({ containerId: 'stars-container' });
+  }
+
+  function teardownHeaderSky() {
+    const state = getHeaderSkyState();
+
+    if (state.observer) {
+      state.observer.disconnect();
+      state.observer = undefined;
+    }
+
+    destroyShooting();
+    destroyStarField('stars-container');
+  }
+
+  setupHeaderSky();
+
+  if (!window.__mokaHeaderLifecycleBound) {
+    window.__mokaHeaderLifecycleBound = true;
+
+    document.addEventListener('astro:before-swap', () => {
+      teardownHeaderSky();
+    });
+
+    document.addEventListener('astro:after-swap', () => {
+      setupHeaderSky();
+    });
+  }
 </script>

@@ -1,20 +1,38 @@
 interface StarConfig {
   count: number;
-  shootingInterval: number;
   containerId: string;
 }
 
-const DEFAULT_CONFIG: StarConfig = {
-  count: 200,
-  shootingInterval: 4000,
+const DEFAULT_CONFIG: Omit<StarConfig, 'count'> = {
   containerId: 'stars-container'
 };
 
-function createStar(container: HTMLElement): void {
+const MIN_STARS = 24;
+const RENDERED_STARS_PER_CONTAINER = new Map<string, number>();
+
+function getDefaultStarCount(): number {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return 40;
+  }
+
+  return window.innerWidth < 768 ? 70 : 120;
+}
+
+function getAdaptiveStarCount(baseCount: number): number {
+  const cpuThreads = navigator.hardwareConcurrency ?? 8;
+  const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8;
+  const isLowEnd = cpuThreads <= 4 || memory <= 4;
+
+  const adjusted = isLowEnd ? Math.round(baseCount * 0.7) : baseCount;
+  return Math.max(MIN_STARS, adjusted);
+}
+
+function createStar(): HTMLDivElement {
   const star = document.createElement('div');
   star.classList.add('star');
 
   const size = Math.random() * 2.5 + 0.5;
+
   star.style.cssText = `
     left: ${Math.random() * 100}%;
     top: ${Math.random() * 100}%;
@@ -25,23 +43,38 @@ function createStar(container: HTMLElement): void {
     animation-delay: ${Math.random() * 3}s;
   `;
 
-  if (Math.random() > 0.7) star.classList.add('bright');
+  if (Math.random() > 0.7) {
+    star.classList.add('bright');
+  }
 
-  container.appendChild(star);
+  return star;
 }
 
+export function destroyStarField(containerId = DEFAULT_CONFIG.containerId): void {
+  const container = document.getElementById(containerId);
+  if (!container) return;
 
+  container.replaceChildren();
+  RENDERED_STARS_PER_CONTAINER.delete(containerId);
+}
 
 export function initStarField(config: Partial<StarConfig> = {}): void {
-  const { count, containerId } = { ...DEFAULT_CONFIG, ...config };
+  const containerId = config.containerId ?? DEFAULT_CONFIG.containerId;
+  const count = getAdaptiveStarCount(config.count ?? getDefaultStarCount());
   const container = document.getElementById(containerId);
 
   if (!container) return;
 
-  container.innerHTML = '';
-
-  for (let i = 0; i < count; i++) {
-    createStar(container);
+  if (RENDERED_STARS_PER_CONTAINER.get(containerId) === count) {
+    return;
   }
 
+  const starsFragment = document.createDocumentFragment();
+
+  for (let i = 0; i < count; i++) {
+    starsFragment.appendChild(createStar());
+  }
+
+  container.replaceChildren(starsFragment);
+  RENDERED_STARS_PER_CONTAINER.set(containerId, count);
 }
