@@ -12,6 +12,7 @@ interface MokaProduct {
   image: string;
   price: string;
   categoria: string;
+  description?: string;
   combo?: ComboOption[];
 }
 
@@ -19,139 +20,104 @@ export const datas: MokaProduct[] = [
     // Hamburguesas
     {
         id: 1,
-        name: "Hamburguesa Moka Chep",
+        name: "MOKA CHED",
         image: "/img/moka/HAMBURGUESA MOKA CHEP.PNG",
         price: "17.000",
         categoria: "Hamburguesas",
+        description: "Pan Brioche, Salsa de la casa, Carne de Res, Queso cheddar, Tocineta y Cebolla caramelizada.",
         combo: [
             { name: "Sin papas", price: "17.000" },
             { name: "Con papas", price: "20.000" }
         ]
     },
     {
-        id: 2,
-        name: "Hamburguesa Moka Doble Carne",
-        image: "/img/moka/HAMBURGUESA MOKA DOBLE CARNE.PNG",
-        price: "25.000",
-        categoria: "Hamburguesas",
-        combo: [
-            { name: "Sin papas", price: "25.000" },
-            { name: "Con papas", price: "28.000" }
-        ]
-    },
-    {
-        id: 21,
-        name: "Hamburguesa Gouka",
-        image: "/img/moka/Hamburguesa Gouka.png",
+        id: 22,
+        name: "HAMBURGUESA NIGHT",
+        image: "/img/moka/Hamburguesa Night..png",
         price: "18.000",
         categoria: "Hamburguesas",
+        description: "Pan Brioche, Salsa especial, Carne de Res, Queso Mozzarela, Tocineta y Cebolla caramelizada.",
         combo: [
             { name: "Sin papas", price: "18.000" },
             { name: "Con papas", price: "21.000" }
         ]
     },
     {
-        id: 22,
-        name: "Hamburguesa Night",
-        image: "/img/moka/Hamburguesa Night..png",
-        price: "15.000",
+        id: 21,
+        name: "HAMBURGUESA GOUKA",
+        image: "/img/moka/Hamburguesa Gouka.png",
+        price: "23.000",
         categoria: "Hamburguesas",
+        description: "Pan Brioche, Salsa de la casa, Carne Res, Queso Gouda, Queso Mozzarela, Tocineta y Cebolla caramelizada.",
         combo: [
-            { name: "Sin papas", price: "15.000" },
-            { name: "Con papas", price: "17.000" }
+            { name: "Sin papas", price: "23.000" },
+            { name: "Con papas", price: "26.000" }
+        ]
+    },
+    {
+        id: 2,
+        name: "HAMBURGUESA MOKA DOBLE CARNE",
+        image: "/img/moka/HAMBURGUESA MOKA DOBLE CARNE.PNG",
+        price: "25.000",
+        categoria: "Hamburguesas",
+        description: "Pan Brioche, Salsa especial, doble Carne, Queso cheddar, doble Queso Mozzarela, Tocineta y Cebolla Caramelizada.",
+        combo: [
+            { name: "Sin papas", price: "25.000" },
+            { name: "Con papas", price: "28.000" }
         ]
     },
     // Pastas
     {
         id: 7,
-        name: "Pasta Carbonara",
+        name: "Pastas Carbonara",
         image: "/img/moka/PASTA CARBONARA.PNG",
-        price: "22.000",
-        categoria: "Pastas"
+        price: "24.000",
+        categoria: "Pastas",
+        description: "Salsa a base de crema de leche, Tocineta y Queso parmesano."
+    },
+    {
+        id: 44,
+        name: "Pastas Primavera",
+        image: "/img/moka/pastas-primavera.PNG",
+        price: "26.000",
+        categoria: "Pastas",
+        description: "Pastas penne en Salsa a base de tomates naturales, pimentón brunoise, cilantro y un toque de crema de leche. Acompañadas con Pollo, Jamón y Queso parmesano."
+    },
+    {
+        id: 10,
+        name: "Pollo Champiñón",
+        image: "/img/moka/PASTAS POLLO CHAMPIÑON.PNG",
+        price: "26.000",
+        categoria: "Pastas",
+        description: "Salsa a base de crema de leche, Pollo, champiñones frescos y queso parmesano."
+    },
+    {
+        id: 9,
+        name: "Especial Moka",
+        image: "/img/moka/PASTAS ESPECIAL MOKA.PNG",
+        price: "28.000",
+        categoria: "Pastas",
+        description: "Salsa a base de crema de leche. Queso parmesano, Tocineta, Pollo y Champiñones."
     },
     {
         id: 8,
         name: "Pastas de la Casa",
         image: "/img/moka/PASTAS DE LA CASA.PNG",
-        price: "22.000",
-        categoria: "Pastas"
-    },
-    {
-        id: 9,
-        name: "Pastas Especial Moka",
-        image: "/img/moka/PASTAS ESPECIAL MOKA.PNG",
-        price: "27.000",
-        categoria: "Pastas"
-    },
-    {
-        id: 10,
-        name: "Pastas Pollo Champiñón",
-        image: "/img/moka/PASTAS POLLO CHAMPIÑON.PNG",
-        price: "10.99",
-        categoria: "Pastas"
-    },
-    // Sandwiches y Comida Rápida
-    {
-        id: 11,
-        name: "Sandwich de Pollo",
-        image: "/img/moka/SANDWICH DE POLLO.PNG",
-        price: "17.000",
-        categoria: "Sandwiches"
-    },
-    {
-        id: 12,
-        name: "Sandwich Tres Quesos",
-        image: "/img/moka/SANDWICH TRES QUESO.png",
-        price: "16.000",
-        categoria: "Sandwiches"
-    },
-    {
-        id: 13,
-        name: "Empanada de Pollo",
-        image: "/img/moka/EMPANADA DE POLLO.png",
-        price: "4.000",
-        categoria: "Acompañantes"
-    },
-    {
-        id: 14,
-        name: "Panzerotti de Pollo",
-        image: "/img/moka/PANZEROTTI DE POLLO.png",
-        price: "5.000",
-        categoria: "Acompañantes"
-    },
-    {
-        id: 15,
-        name: "Deditos de Queso",
-        image: "/img/moka/DEDITOS DE QUESO.png",
-        price: "3.500",
-        categoria: "Acompañantes"
-    },
-    {
-        id: 23,
-        name: "Papas a la Francesa",
-        image: "/img/moka/PAPAS A LA FRANCESA.png",
-        price: "4.50",
-        categoria: "Acompañantes"
+        price: "26.000",
+        categoria: "Pastas",
+        description: "Salsa a base de tomates naturales, pimentón brunoise. Carne molida y Queso parmesano."
     },
     // Bebidas Frías
     {
         id: 3,
         name: "Jugo de Mora",
         image: "/img/moka/JUGOO DE MORA.png",
-        price: "12.000",
+        price: "11.000",
         categoria: "Bebidas Frías",
         combo: [
-            { name: "Sin leche", price: "12.000" },
-            { name: "Con leche", price: "14.000" }
+            { name: "En Agua", price: "11.000" },
+            { name: "En Leche", price: "13.000" }
         ]
-    },
-    {
-        id: 4,
-        name: "Limonada de Coco",
-        image: "/img/moka/LIMONADA DE COCO.png",
-        price: "14.000",
-        categoria: "Bebidas Frías",
-
     },
     {
         id: 5,
@@ -160,37 +126,29 @@ export const datas: MokaProduct[] = [
         price: "11.000",
         categoria: "Bebidas Frías",
         combo: [
-            { name: "Sin leche", price: "11.000" },
-            { name: "Con leche", price: "14.000" }
+            { name: "En Agua", price: "11.000" },
+            { name: "En Leche", price: "13.000" }
         ]
+    },
+    {
+        id: 4,
+        name: "Limonada de Coco",
+        image: "/img/moka/LIMONADA DE COCO.png",
+        price: "14.000",
+        categoria: "Bebidas Frías"
     },
     {
         id: 6,
         name: "Milo Frío",
         image: "/img/moka/MILO FRIO.png",
-        price: "2.99",
-        categoria: "Bebidas Frías",
-        combo: [
-            { name: "Sin leche", price: "2.99" },
-            { name: "Con leche", price: "3.50" }
-        ]
+        price: "14.000",
+        categoria: "Bebidas Frías"
     },
     {
         id: 24,
         name: "Chai Frío",
         image: "/img/moka/Chai Frio .PNG",
         price: "16.000",
-        categoria: "Bebidas Frías",
-        combo: [
-            { name: "Frio", price: "16.000" },
-            { name: "Caliente", price: "12.000" }
-        ]
-    },
-    {
-        id: 25,
-        name: "Frappe de Corozo",
-        image: "/img/moka/Frappe de Corozo.PNG",
-        price: "4.25",
         categoria: "Bebidas Frías"
     },
     {
@@ -214,57 +172,206 @@ export const datas: MokaProduct[] = [
         price: "16.000",
         categoria: "Bebidas Frías"
     },
+    {
+        id: 30,
+        name: "Latte Moka",
+        image: "/img/moka/Latte Moka.PNG",
+        price: "14.000",
+        categoria: "Bebidas Frías"
+    },
+    {
+        id: 31,
+        name: "Affogato",
+        image: "",
+        price: "13.000",
+        categoria: "Bebidas Frías"
+    },
+    {
+        id: 32,
+        name: "Copa de Helado",
+        image: "",
+        price: "9.000",
+        categoria: "Bebidas Frías",
+        description: "Con chispas de chocolate y Galleta oreo."
+    },
     // Bebidas Calientes
     {
-        id: 16,
-        name: "Café Americano",
-      image: "/img/moka/CAFE AMERCIANO(1).JPG",
-        price: "2.50",
-        categoria: "Bebidas Calientes"
-    },
-    {
-        id: 17,
-        name: "Capuchino",
-      image: "/img/moka/CAPUCHINO 2.JPG",
-        price: "3.00",
-        categoria: "Bebidas Calientes"
-    },
-    {
-        id: 18,
-        name: "Capuchino de Vainilla",
-      image: "/img/moka/CAPUCHINO DE VAINILLA (2).JPG",
-        price: "3.50",
-        categoria: "Bebidas Calientes"
-    },
-    {
-        id: 19,
-        name: "Chocolate Caliente",
-      image: "/img/moka/CHOCOLATE (2).jpg",
-        price: "2.75",
+        id: 33,
+        name: "Expresso",
+        image: "",
+        price: "4.000",
         categoria: "Bebidas Calientes"
     },
     {
         id: 20,
         name: "Tinto",
-      image: "/img/moka/TINTO 2.jpg",
-        price: "1.50",
+        image: "/img/moka/TINTO 2.jpg",
+        price: "5.000",
+        categoria: "Bebidas Calientes"
+    },
+    {
+        id: 16,
+        name: "Café Americano",
+        image: "/img/moka/CAFE AMERCIANO(1).JPG",
+        price: "7.000",
+        categoria: "Bebidas Calientes"
+    },
+    {
+        id: 17,
+        name: "Capuchino",
+        image: "/img/moka/CAPUCHINO 2.JPG",
+        price: "12.000",
+        categoria: "Bebidas Calientes"
+    },
+    {
+        id: 18,
+        name: "Capuchino de Vainilla",
+        image: "/img/moka/CAPUCHINO DE VAINILLA (2).JPG",
+        price: "13.000",
+        categoria: "Bebidas Calientes"
+    },
+    {
+        id: 34,
+        name: "Latte Caliente",
+        image: "",
+        price: "8.000",
+        categoria: "Bebidas Calientes"
+    },
+    {
+        id: 35,
+        name: "Café Moka",
+        image: "",
+        price: "13.000",
+        categoria: "Bebidas Calientes"
+    },
+    {
+        id: 19,
+        name: "Chocolate Caliente",
+        image: "/img/moka/CHOCOLATE (2).jpg",
+        price: "10.000",
         categoria: "Bebidas Calientes"
     },
     {
         id: 29,
         name: "Chai Caliente",
-      image: "/img/moka/Chai caliente .PNG",
-        price: "3.75",
+        image: "/img/moka/Chai caliente .PNG",
+        price: "12.000",
         categoria: "Bebidas Calientes"
     },
+    // Panes de la Casa y Tortas
     {
-        id: 30,
-        name: "Latte Moka",
-      image: "/img/moka/Latte Moka.PNG",
-        price: "3.50",
-        categoria: "Bebidas Frías"
+        id: 36,
+        name: "Croissan",
+        image: "/img/moka/Croissan .PNG",
+        price: "3.000",
+        categoria: "Panes de la Casa"
+    },
+    {
+        id: 37,
+        name: "Dedito Horneado",
+        image: "/img/moka/Deditos Horneados.PNG",
+        price: "5.000",
+        categoria: "Panes de la Casa"
+    },
+    {
+        id: 38,
+        name: "Galleta Chip",
+        image: "/img/moka/Galletas chip .PNG",
+        price: "3.000",
+        categoria: "Panes de la Casa"
+    },
+    {
+        id: 39,
+        name: "Galleta con chispas de chocolate",
+        image: "",
+        price: "3.000",
+        categoria: "Panes de la Casa"
+    },
+    {
+        id: 40,
+        name: "Torta del Día",
+        image: "",
+        price: "9.000",
+        categoria: "Panes de la Casa"
+    },
+    // Más Bebidas
+    {
+        id: 41,
+        name: "Coca cola 400ml",
+        image: "",
+        price: "6.000",
+        categoria: "Más Bebidas"
+    },
+    {
+        id: 42,
+        name: "Cola Roman 400ml",
+        image: "",
+        price: "6.000",
+        categoria: "Más Bebidas"
+    },
+    {
+        id: 43,
+        name: "Botella de Agua",
+        image: "",
+        price: "3.500",
+        categoria: "Más Bebidas"
+    },
+    // Para Acompañar
+    {
+        id: 13,
+        name: "Empanada de Pollo",
+        image: "/img/moka/EMPANADA DE POLLO.png",
+        price: "4.000",
+        categoria: "Para Acompañar"
+    },
+    {
+        id: 14,
+        name: "Panzerotti de Pollo",
+        image: "/img/moka/PANZEROTTI DE POLLO.png",
+        price: "5.500",
+        categoria: "Para Acompañar"
+    },
+    {
+        id: 15,
+        name: "Deditos de Queso",
+        image: "/img/moka/DEDITOS DE QUESO.png",
+        price: "3.500",
+        categoria: "Para Acompañar"
+    },
+    // Desayunos
+    {
+        id: 45,
+        name: "Desayuno Como en Casa",
+        image: "",
+        price: "15.000",
+        categoria: "Desayunos",
+        description: "1 - Patacones o Arepitas de Queso. 2 - Pan del día (Croissan de Queso o Pan de mantequilla). Acompañados de Huevos al gusto (Revueltos, Perico, Revueltos con jamón y Tortilla de jamón o Tortilla de vegetales) y Queso costeño."
+    },
+    // Asados
+    {
+        id: 46,
+        name: "200 Gr Pechuga a la plancha",
+        image: "",
+        price: "22.000",
+        categoria: "Asados",
+        description: "Acompañada con papas rizadas y salsa de la casa."
+    },
+    {
+        id: 47,
+        name: "200 Gr Cerdo a la plancha",
+        image: "",
+        price: "24.000",
+        categoria: "Asados",
+        description: "Acompañada con papas rizadas y salsa de la casa."
+    },
+    // Adiciones
+    {
+        id: 48,
+        name: "Porción de papas risas",
+        image: "",
+        price: "7.000",
+        categoria: "Adiciones"
     }
-    // 
 ];
 
 export function getStaticPaths() {
@@ -275,77 +382,130 @@ export function getStaticPaths() {
 }
 
 const { data } = Astro.props
+
+const categoriaColors: Record<string, string> = {
+    "Hamburguesas": "bg-amber-500/20 text-amber-400 border-amber-500/30",
+    "Pastas": "bg-orange-500/20 text-orange-400 border-orange-500/30",
+    "Bebidas Frías": "bg-sky-500/20 text-sky-400 border-sky-500/30",
+    "Bebidas Calientes": "bg-rose-500/20 text-rose-400 border-rose-500/30",
+    "Panes de la Casa": "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
+    "Más Bebidas": "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
+    "Para Acompañar": "bg-lime-500/20 text-lime-400 border-lime-500/30",
+    "Desayunos": "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+    "Asados": "bg-red-500/20 text-red-400 border-red-500/30",
+    "Adiciones": "bg-violet-500/20 text-violet-400 border-violet-500/30",
+};
+
+const badgeClass = categoriaColors[data.categoria] || "bg-white/10 text-white/60 border-white/20";
 ---
 <Layout>
-  <main class="min-h-screen bg-tertiary flex flex-col justify-center ">
-    
-    <!-- Imagen hero con overlay y botón volver -->
-    <div class="relative w-full aspect-square max-h-[70vh] overflow-hidden">
-      <img 
-        src={data.image} 
-        alt={data.name} 
-        transition:name={`product-img-${data.id}`}
-        loading="eager"
-        decoding="async"
-        fetchpriority="high"
-        class="w-full h-full rounded-2xl object-contain"
-      />
+  <main class="min-h-screen bg-tertiary flex flex-col">
 
-      <!-- Degradado sobre la imagen -->
-      <div class="absolute inset-0 bg-linear-to-t from-tertiary via-transparent to-tertiary/60"></div>
+    <!-- Imagen hero -->
+    <div class="relative w-full overflow-hidden">
+      <div class="relative aspect-[4/3] sm:aspect-[16/10] max-h-[65vh]">
+        {data.image ? (
+          <img 
+            src={data.image} 
+            alt={data.name} 
+            transition:name={`product-img-${data.id}`}
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+            class="w-full h-full object-cover"
+          />
+        ) : (
+          <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-white/5 to-white/[0.02]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 text-white/10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+        )}
+        <!-- Degradado inferior -->
+        <div class="absolute inset-0 bg-linear-to-t from-tertiary via-tertiary/20 to-transparent"></div>
+      </div>
 
       <!-- Botón volver flotante -->
       <a 
         href="/#productos" 
-        class="absolute top-4 left-4 z-10 w-12 h-12 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-sm text-white hover:text-secondary hover:bg-black/70 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+        class="absolute top-4 left-4 z-20 flex items-center gap-2 px-4 py-2.5 rounded-full bg-black/40 backdrop-blur-md text-white/80 hover:text-white hover:bg-black/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50 cursor-pointer border border-white/10"
         aria-label="Volver al menú"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
+        <span class="text-sm font-medium hidden sm:inline">Menú</span>
       </a>
     </div>
 
     <!-- Info del producto -->
-    <div class="flex flex-col gap-3 px-5 -mt-8 relative z-10 pb-28">
+    <div class="flex flex-col gap-4 px-5 -mt-6 relative z-10 pb-28 max-w-2xl mx-auto w-full">
+
+      <!-- Badge de categoría -->
+      <div>
+        <span class={`inline-block px-3 py-1 rounded-full text-xs font-semibold border ${badgeClass}`}>
+          {data.categoria}
+        </span>
+      </div>
+
+      <!-- Nombre -->
       <h1 
         transition:name={`product-title-${data.id}`}
-        class="text-2xl font-bold text-white leading-tight"
+        class="text-3xl sm:text-4xl font-bold text-white leading-tight tracking-tight"
       >
         {data.name}
       </h1>
 
-      <p 
-        transition:name={`product-price-${data.id}`}
-        class="text-white/50 font-extrabold text-3xl md:text-4xl"
-      >
-        ${data.price}
-      </p>
+      <!-- Precio -->
+      <div class="flex items-baseline gap-2 mt-1">
+        <span class="text-white/40 text-lg font-medium">$</span>
+        <p 
+          transition:name={`product-price-${data.id}`}
+          class="text-white font-extrabold text-4xl sm:text-5xl tracking-tight"
+        >
+          {data.price}
+        </p>
+      </div>
 
-      {data.combo && (
-        <div class="mt-8 border-t border-white/30 pt-8">
-          <h3 class="text-white font-bold text-xl mb-5">Opciones de Combo</h3>
-          <div class="flex flex-col gap-3">
+      <!-- Descripción -->
+      {data.description && (
+        <div class="mt-2 p-4 rounded-2xl bg-white/[0.04] border border-white/[0.06]">
+          <p class="text-white/50 text-sm leading-relaxed">
+            {data.description}
+          </p>
+        </div>
+      )}
+
+      <!-- Opciones de Combo -->
+      {data.combo && data.combo.length > 0 && (
+        <div class="mt-4">
+          <h3 class="text-white/40 font-semibold text-xs uppercase tracking-widest mb-3">Elige tu opción</h3>
+          <div class="flex flex-col gap-2.5">
             {data.combo.map((option) => (
               <button 
-                class="flex justify-between items-center bg-gray-400/50 hover:bg-white/50 active:bg-primary/35 rounded-lg p-5 border border-white/30 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary group"
+                class="flex justify-between items-center rounded-2xl px-5 py-4 border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.08] hover:border-white/[0.15] active:scale-[0.98] transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50 group"
                 aria-label={`Seleccionar ${option.name} - $${option.price}`}
               >
-                <span class="text-white font-semibold text-xl  group-hover:text-secondary transition-colors duration-200">{option.name}</span>
-                <span class="text-white/70 font-bold text-lg group-hover:scale-110 transition-transform duration-200">${option.price}</span>
+                <span class="text-white font-medium text-base group-hover:text-white transition-colors duration-200">{option.name}</span>
+                <span class="text-white/60 font-bold text-base group-hover:text-white transition-colors duration-200">${option.price}</span>
               </button>
             ))}
           </div>
         </div>
       )}
 
-      <p class="text-white/30 text-sm leading-relaxed mt-2">
-        Producto preparado al momento con los mejores ingredientes. 
-        Disponible para consumo en el local.
-      </p>
+      <!-- Footer info -->
+      <div class="mt-6 pt-6 border-t border-white/[0.06] flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <p class="text-white/25 text-xs leading-relaxed">
+          Producto preparado al momento con los mejores ingredientes. Disponible para consumo en el local.
+        </p>
+      </div>
     </div>
-
-    <!-- Botón fijo abajo -->
 
   </main>
 </Layout>

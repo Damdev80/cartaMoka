@@ -1,7 +1,7 @@
 ---
 interface Props {
   title: string;
-  price: number;
+  price: string;
   image: string;
   id: number;
 }
@@ -41,7 +41,7 @@ const { title, price, image, id } = Astro.props as Props;
         transition:name={`product-price-${id}`}
         class="text-white/50 font-extrabold text-lg md:text-xl mt-2"
       >
-        ${price.toFixed(2)}
+        ${price}
       </p>
     </div>
   </div>

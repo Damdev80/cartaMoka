@@ -33,7 +33,7 @@ const categorias = ["Todas", ...Array.from(new Set(datas.map(item => item.catego
                     <Card
                         id={item.id} 
                         title={item.name} 
-                        price={parseFloat(item.price)} 
+                        price={item.price}
                         image={item.image}
                     />
                 </div>
