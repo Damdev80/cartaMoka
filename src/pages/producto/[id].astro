@@ -12,6 +12,7 @@ interface MokaProduct {
   image: string;
   price: string;
   categoria: string;
+  parentCategory: string;
   description?: string;
   combo?: ComboOption[];
 }
@@ -24,6 +25,7 @@ export const datas: MokaProduct[] = [
         image: "/img/moka/HAMBURGUESA MOKA CHEP.PNG",
         price: "17.000",
         categoria: "Hamburguesas",
+        parentCategory: "Comidas",
         description: "Pan Brioche, Salsa de la casa, Carne de Res, Queso cheddar, Tocineta y Cebolla caramelizada.",
         combo: [
             { name: "Sin papas", price: "17.000" },
@@ -36,6 +38,7 @@ export const datas: MokaProduct[] = [
         image: "/img/moka/Hamburguesa Night..png",
         price: "18.000",
         categoria: "Hamburguesas",
+        parentCategory: "Comidas",
         description: "Pan Brioche, Salsa especial, Carne de Res, Queso Mozzarela, Tocineta y Cebolla caramelizada.",
         combo: [
             { name: "Sin papas", price: "18.000" },
@@ -48,6 +51,7 @@ export const datas: MokaProduct[] = [
         image: "/img/moka/Hamburguesa Gouka.png",
         price: "23.000",
         categoria: "Hamburguesas",
+        parentCategory: "Comidas",
         description: "Pan Brioche, Salsa de la casa, Carne Res, Queso Gouda, Queso Mozzarela, Tocineta y Cebolla caramelizada.",
         combo: [
             { name: "Sin papas", price: "23.000" },
@@ -60,6 +64,7 @@ export const datas: MokaProduct[] = [
         image: "/img/moka/HAMBURGUESA MOKA DOBLE CARNE.PNG",
         price: "25.000",
         categoria: "Hamburguesas",
+        parentCategory: "Comidas",
         description: "Pan Brioche, Salsa especial, doble Carne, Queso cheddar, doble Queso Mozzarela, Tocineta y Cebolla Caramelizada.",
         combo: [
             { name: "Sin papas", price: "25.000" },
@@ -73,6 +78,7 @@ export const datas: MokaProduct[] = [
         image: "/img/moka/PASTA CARBONARA.PNG",
         price: "24.000",
         categoria: "Pastas",
+        parentCategory: "Comidas",
         description: "Salsa a base de crema de leche, Tocineta y Queso parmesano."
     },
     {
@@ -81,6 +87,7 @@ export const datas: MokaProduct[] = [
         image: "/img/moka/pastas-primavera.PNG",
         price: "26.000",
         categoria: "Pastas",
+        parentCategory: "Comidas",
         description: "Pastas penne en Salsa a base de tomates naturales, pimentón brunoise, cilantro y un toque de crema de leche. Acompañadas con Pollo, Jamón y Queso parmesano."
     },
     {
@@ -89,6 +96,7 @@ export const datas: MokaProduct[] = [
         image: "/img/moka/PASTAS POLLO CHAMPIÑON.PNG",
         price: "26.000",
         categoria: "Pastas",
+        parentCategory: "Comidas",
         description: "Salsa a base de crema de leche, Pollo, champiñones frescos y queso parmesano."
     },
     {
@@ -97,6 +105,7 @@ export const datas: MokaProduct[] = [
         image: "/img/moka/PASTAS ESPECIAL MOKA.PNG",
         price: "28.000",
         categoria: "Pastas",
+        parentCategory: "Comidas",
         description: "Salsa a base de crema de leche. Queso parmesano, Tocineta, Pollo y Champiñones."
     },
     {
@@ -105,6 +114,7 @@ export const datas: MokaProduct[] = [
         image: "/img/moka/PASTAS DE LA CASA.PNG",
         price: "26.000",
         categoria: "Pastas",
+        parentCategory: "Comidas",
         description: "Salsa a base de tomates naturales, pimentón brunoise. Carne molida y Queso parmesano."
     },
     // Bebidas Frías
@@ -114,6 +124,7 @@ export const datas: MokaProduct[] = [
         image: "/img/moka/JUGOO DE MORA.png",
         price: "11.000",
         categoria: "Bebidas Frías",
+        parentCategory: "Bebidas",
         combo: [
             { name: "En Agua", price: "11.000" },
             { name: "En Leche", price: "13.000" }
@@ -125,6 +136,7 @@ export const datas: MokaProduct[] = [
         image: "/img/moka/MARACUYA.png",
         price: "11.000",
         categoria: "Bebidas Frías",
+        parentCategory: "Bebidas",
         combo: [
             { name: "En Agua", price: "11.000" },
             { name: "En Leche", price: "13.000" }
@@ -135,56 +147,64 @@ export const datas: MokaProduct[] = [
         name: "Limonada de Coco",
         image: "/img/moka/LIMONADA DE COCO.png",
         price: "14.000",
-        categoria: "Bebidas Frías"
+        categoria: "Bebidas Frías",
+        parentCategory: "Bebidas"
     },
     {
         id: 6,
         name: "Milo Frío",
         image: "/img/moka/MILO FRIO.png",
         price: "14.000",
-        categoria: "Bebidas Frías"
+        categoria: "Bebidas Frías",
+        parentCategory: "Bebidas"
     },
     {
         id: 24,
         name: "Chai Frío",
         image: "/img/moka/Chai Frio .PNG",
         price: "16.000",
-        categoria: "Bebidas Frías"
+        categoria: "Bebidas Frías",
+        parentCategory: "Bebidas"
     },
     {
         id: 26,
         name: "Granizado de Café",
         image: "/img/moka/Granizado-de-Cafe .PNG",
         price: "15.000",
-        categoria: "Bebidas Frías"
+        categoria: "Bebidas Frías",
+        parentCategory: "Bebidas"
     },
     {
         id: 27,
         name: "Granizado de Oreo",
         image: "/img/moka/Granizado de Oreo .PNG",
         price: "17.000",
-        categoria: "Bebidas Frías"
+        categoria: "Bebidas Frías",
+        parentCategory: "Bebidas"
     },
     {
         id: 28,
         name: "Granizado Moka",
         image: "/img/moka/Granizado Moka .PNG",
         price: "16.000",
-        categoria: "Bebidas Frías"
+        categoria: "Bebidas Frías",
+        parentCategory: "Bebidas"
     },
     {
         id: 30,
         name: "Latte Moka",
         image: "/img/moka/Latte Moka.PNG",
         price: "14.000",
-        categoria: "Bebidas Frías"
+        categoria: "Bebidas Frías",
+        parentCategory: "Bebidas"
     },
     {
         id: 31,
         name: "Affogato",
         image: "",
         price: "13.000",
-        categoria: "Bebidas Frías"
+        categoria: "Bebidas Frías",
+        parentCategory: "Bebidas"
     },
     {
         id: 32,
@@ -192,6 +212,7 @@ export const datas: MokaProduct[] = [
         image: "",
         price: "9.000",
         categoria: "Bebidas Frías",
+        parentCategory: "Bebidas",
         description: "Con chispas de chocolate y Galleta oreo."
     },
     // Bebidas Calientes
@@ -200,63 +221,72 @@ export const datas: MokaProduct[] = [
         name: "Expresso",
         image: "",
         price: "4.000",
-        categoria: "Bebidas Calientes"
+        categoria: "Bebidas Calientes",
+        parentCategory: "Bebidas"
     },
     {
         id: 20,
         name: "Tinto",
         image: "/img/moka/TINTO 2.jpg",
         price: "5.000",
-        categoria: "Bebidas Calientes"
+        categoria: "Bebidas Calientes",
+        parentCategory: "Bebidas"
     },
     {
         id: 16,
         name: "Café Americano",
         image: "/img/moka/CAFE AMERCIANO(1).JPG",
         price: "7.000",
-        categoria: "Bebidas Calientes"
+        categoria: "Bebidas Calientes",
+        parentCategory: "Bebidas"
     },
     {
         id: 17,
         name: "Capuchino",
         image: "/img/moka/CAPUCHINO 2.JPG",
         price: "12.000",
-        categoria: "Bebidas Calientes"
+        categoria: "Bebidas Calientes",
+        parentCategory: "Bebidas"
     },
     {
         id: 18,
         name: "Capuchino de Vainilla",
         image: "/img/moka/CAPUCHINO DE VAINILLA (2).JPG",
         price: "13.000",
-        categoria: "Bebidas Calientes"
+        categoria: "Bebidas Calientes",
+        parentCategory: "Bebidas"
     },
     {
         id: 34,
         name: "Latte Caliente",
         image: "",
         price: "8.000",
-        categoria: "Bebidas Calientes"
+        categoria: "Bebidas Calientes",
+        parentCategory: "Bebidas"
     },
     {
         id: 35,
         name: "Café Moka",
         image: "",
         price: "13.000",
-        categoria: "Bebidas Calientes"
+        categoria: "Bebidas Calientes",
+        parentCategory: "Bebidas"
     },
     {
         id: 19,
         name: "Chocolate Caliente",
         image: "/img/moka/CHOCOLATE (2).jpg",
         price: "10.000",
-        categoria: "Bebidas Calientes"
+        categoria: "Bebidas Calientes",
+        parentCategory: "Bebidas"
     },
     {
         id: 29,
         name: "Chai Caliente",
         image: "/img/moka/Chai caliente .PNG",
         price: "12.000",
-        categoria: "Bebidas Calientes"
+        categoria: "Bebidas Calientes",
+        parentCategory: "Bebidas"
     },
     // Panes de la Casa y Tortas
     {
@@ -264,35 +294,40 @@ export const datas: MokaProduct[] = [
         name: "Croissan",
         image: "/img/moka/Croissan .PNG",
         price: "3.000",
-        categoria: "Panes de la Casa"
+        categoria: "Panes de la Casa",
+        parentCategory: "Comidas"
     },
     {
         id: 37,
         name: "Dedito Horneado",
         image: "/img/moka/Deditos Horneados.PNG",
         price: "5.000",
-        categoria: "Panes de la Casa"
+        categoria: "Panes de la Casa",
+        parentCategory: "Comidas"
     },
     {
         id: 38,
         name: "Galleta Chip",
         image: "/img/moka/Galletas chip .PNG",
         price: "3.000",
-        categoria: "Panes de la Casa"
+        categoria: "Panes de la Casa",
+        parentCategory: "Comidas"
     },
     {
         id: 39,
         name: "Galleta con chispas de chocolate",
         image: "",
         price: "3.000",
-        categoria: "Panes de la Casa"
+        categoria: "Panes de la Casa",
+        parentCategory: "Comidas"
     },
     {
         id: 40,
         name: "Torta del Día",
         image: "",
         price: "9.000",
-        categoria: "Panes de la Casa"
+        categoria: "Panes de la Casa",
+        parentCategory: "Comidas"
     },
     // Más Bebidas
     {
@@ -300,21 +335,24 @@ export const datas: MokaProduct[] = [
         name: "Coca cola 400ml",
         image: "",
         price: "6.000",
-        categoria: "Más Bebidas"
+        categoria: "Más Bebidas",
+        parentCategory: "Bebidas"
     },
     {
         id: 42,
         name: "Cola Roman 400ml",
         image: "",
         price: "6.000",
-        categoria: "Más Bebidas"
+        categoria: "Más Bebidas",
+        parentCategory: "Bebidas"
     },
     {
         id: 43,
         name: "Botella de Agua",
         image: "",
         price: "3.500",
-        categoria: "Más Bebidas"
+        categoria: "Más Bebidas",
+        parentCategory: "Bebidas"
     },
     // Para Acompañar
     {
@@ -322,30 +360,38 @@ export const datas: MokaProduct[] = [
         name: "Empanada de Pollo",
         image: "/img/moka/EMPANADA DE POLLO.png",
         price: "4.000",
-        categoria: "Para Acompañar"
+        categoria: "Para Acompañar",
+        parentCategory: "Comidas"
     },
     {
         id: 14,
         name: "Panzerotti de Pollo",
         image: "/img/moka/PANZEROTTI DE POLLO.png",
         price: "5.500",
-        categoria: "Para Acompañar"
+        categoria: "Para Acompañar",
+        parentCategory: "Comidas"
     },
     {
         id: 15,
         name: "Deditos de Queso",
         image: "/img/moka/DEDITOS DE QUESO.png",
         price: "3.500",
-        categoria: "Para Acompañar"
+        categoria: "Para Acompañar",
+        parentCategory: "Comidas"
     },
     // Desayunos
     {
         id: 45,
         name: "Desayuno Como en Casa",
-        image: "",
+        image: "/img/moka/desayuno.png",
         price: "15.000",
         categoria: "Desayunos",
-        description: "1 - Patacones o Arepitas de Queso. 2 - Pan del día (Croissan de Queso o Pan de mantequilla). Acompañados de Huevos al gusto (Revueltos, Perico, Revueltos con jamón y Tortilla de jamón o Tortilla de vegetales) y Queso costeño."
+        parentCategory: "Comidas",
+        description: "Patacones o Arepitas de Queso. Pan del día (Croissan o Pan de mantequilla). Acompañados de huevo al gusto (Revueltos, Pericos, Revueltos con Jamón, Tortilla de Jamón o Tortilla de Vegetales) y queso costeño.",
+        combo: [
+            { name: "Con Patacones", price: "15.000" },
+            { name: "Con Arepitas de Queso", price: "15.000" }
+        ]
     },
     // Asados
     {
@@ -354,6 +400,7 @@ export const datas: MokaProduct[] = [
         image: "",
         price: "22.000",
         categoria: "Asados",
+        parentCategory: "Comidas",
         description: "Acompañada con papas rizadas y salsa de la casa."
     },
     {
@@ -362,15 +409,43 @@ export const datas: MokaProduct[] = [
         image: "",
         price: "24.000",
         categoria: "Asados",
+        parentCategory: "Comidas",
         description: "Acompañada con papas rizadas y salsa de la casa."
+    },
+    // Almuerzos Ejecutivos
+    {
+        id: 49,
+        name: "Almuerzos Ejecutivos",
+        image: "",
+        price: "19.000",
+        categoria: "Almuerzos Ejecutivos",
+        parentCategory: "Comidas",
+        description: "Pregunta por el Menú del Día."
     },
     // Adiciones
     {
         id: 48,
         name: "Porción de papas risas",
-        image: "",
+        image: "/img/moka/PAPAS A LA FRANCESA.png",
         price: "7.000",
-        categoria: "Adiciones"
+        categoria: "Adiciones",
+        parentCategory: "Adiciones"
+    },
+    {
+        id: 50,
+        name: "Porción de Patacones",
+        image: "",
+        price: "5.000",
+        categoria: "Adiciones",
+        parentCategory: "Adiciones"
+    },
+    {
+        id: 51,
+        name: "Porción de Arroz",
+        image: "",
+        price: "4.000",
+        categoria: "Adiciones",
+        parentCategory: "Adiciones"
     }
 ];
 

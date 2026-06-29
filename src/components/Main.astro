@@ -2,38 +2,53 @@
 import Card from "./Card.astro";
 import { datas } from "../pages/producto/[id].astro";
 
-// Extraer categorías únicas
-const categorias = ["Todas", ...Array.from(new Set(datas.map(item => item.categoria)))];
+// Mapeo de categorías padre → subcategorías
+const parentMap: Record<string, string[]> = {
+    "Bebidas": ["Todas", "Bebidas Frías", "Bebidas Calientes", "Más Bebidas"],
+    "Comidas": ["Todas", "Hamburguesas", "Pastas", "Panes de la Casa", "Para Acompañar", "Desayunos", "Almuerzos Ejecutivos", "Asados"],
+    "Adiciones": ["Todas", "Adiciones"],
+};
+
+const parentCategories = ["Todas", "Bebidas", "Comidas", "Adiciones"];
 ---
 
 <main id="productos" class="w-full min-h-screen bg-tertiary px-4 py-12">
     <div class="max-w-6xl mx-auto">
-        <!-- Filtros de Categoría -->
-        <div id="categorias-filtros" class="mb-12 flex flex-wrap gap-3 justify-center">
-            {categorias.map((categoria) => (
+
+        <!-- Filtros padre -->
+        <div id="parent-filters" class="mb-4 flex flex-wrap gap-3 justify-center">
+            {parentCategories.map((cat) => (
                 <button 
-                    data-categoria={categoria}
-                    class="filtro-btn px-6 py-3 rounded-full font-semibold text-sm transition-all duration-200 cursor-pointer
+                    data-parent={cat}
+                    class="parent-btn px-6 py-3 rounded-full font-semibold text-sm transition-all duration-200 cursor-pointer
                            bg-primary/20 text-primary hover:bg-primary hover:text-white hover:shadow-lg
                            data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:shadow-lg
                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-tertiary
                            active:scale-95 min-h-12"
-                    data-active={categoria === "Todas" ? "true" : "false"}
-                    aria-pressed={categoria === "Todas" ? "true" : "false"}
+                    data-active={cat === "Todas" ? "true" : "false"}
+                    aria-pressed={cat === "Todas" ? "true" : "false"}
                 >
-                    {categoria}
+                    {cat}
                 </button>
             ))}
+        </div>
+
+        <!-- Sub-filtros -->
+        <div id="sub-filters" class="mb-10 flex flex-wrap gap-2 justify-center hidden">
         </div>
 
         <!-- Grid de Productos -->
         <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4" id="productos-grid">
             {datas.map((item) => (
-                <div data-categoria={item.categoria} class="producto-item">
+                <div 
+                    data-categoria={item.categoria} 
+                    data-parent={item.parentCategory}
+                    class="producto-item"
+                >
                     <Card
                         id={item.id} 
                         title={item.name} 
-                        price={item.price}
+                        price={item.price} 
                         image={item.image}
                     />
                 </div>
@@ -43,81 +58,139 @@ const categorias = ["Todas", ...Array.from(new Set(datas.map(item => item.catego
 </main>
 
 <script>
-    function applyFilter(selectedCategory) {
+    const parentMap: Record<string, string[]> = {
+        "Bebidas": ["Todas", "Bebidas Frías", "Bebidas Calientes", "Más Bebidas"],
+        "Comidas": ["Todas", "Hamburguesas", "Pastas", "Panes de la Casa", "Para Acompañar", "Desayunos", "Almuerzos Ejecutivos", "Asados"],
+        "Adiciones": ["Todas", "Adiciones"],
+    };
+
+    let selectedParent = "Todas";
+    let selectedSub = "Todas";
+
+    function renderSubFilters(parent: string) {
+        const container = document.getElementById('sub-filters');
+        if (!container) return;
+
+        if (parent === "Todas") {
+            container.classList.add('hidden');
+            container.innerHTML = '';
+            return;
+        }
+
+        const subs = parentMap[parent] || [];
+        container.classList.remove('hidden');
+        container.innerHTML = subs.map((sub) => `
+            <button 
+                data-sub="${sub}"
+                class="sub-btn px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer
+                       bg-white/[0.06] text-white/50 hover:bg-white/[0.12] hover:text-white/80
+                       data-[active=true]:bg-white/[0.15] data-[active=true]:text-white
+                       focus:outline-none focus:ring-2 focus:ring-white/20
+                       active:scale-95 min-h-10 border border-white/[0.06]"
+                data-active="${sub === 'Todas' ? 'true' : 'false'}"
+            >
+                ${sub}
+            </button>
+        `).join('');
+
+        selectedSub = 'Todas';
+        bindSubFilters();
+    }
+
+    function applyFilter() {
         const productos = document.querySelectorAll('.producto-item');
 
         productos.forEach((producto) => {
-            const categoriaProducto = producto.getAttribute('data-categoria');
-            const shouldShow = selectedCategory === 'Todas' || categoriaProducto === selectedCategory;
-            const productoElement = producto;
+            const cat = producto.getAttribute('data-categoria') || '';
+            const parent = producto.getAttribute('data-parent') || '';
+            const el = producto;
 
-            productoElement.toggleAttribute('hidden', !shouldShow);
+            let show = false;
 
-            if (shouldShow) {
-                productoElement.classList.remove('fade-in');
+            if (selectedParent === "Todas") {
+                show = true;
+            } else if (selectedSub === "Todas") {
+                show = parent === selectedParent;
+            } else {
+                show = cat === selectedSub;
+            }
+
+            el.toggleAttribute('hidden', !show);
+
+            if (show) {
+                el.classList.remove('fade-in');
                 requestAnimationFrame(() => {
-                    productoElement.classList.add('fade-in');
+                    el.classList.add('fade-in');
                 });
             } else {
-                productoElement.classList.remove('fade-in');
+                el.classList.remove('fade-in');
             }
         });
     }
 
-    function bindFilters() {
-        const filtrosContainer = document.getElementById('categorias-filtros');
-        if (!filtrosContainer || filtrosContainer.dataset.bound === 'true') {
-            return;
-        }
+    function bindParentFilters() {
+        const container = document.getElementById('parent-filters');
+        if (!container || container.dataset.bound === 'true') return;
+        container.dataset.bound = 'true';
 
-        filtrosContainer.dataset.bound = 'true';
-
-        filtrosContainer.addEventListener('click', (event) => {
+        container.addEventListener('click', (event) => {
             const target = event.target;
-            if (!(target instanceof Element)) {
-                return;
-            }
+            if (!(target instanceof Element)) return;
+            const btn = target.closest('.parent-btn');
+            if (!(btn instanceof HTMLElement)) return;
 
-            const filtro = target.closest('.filtro-btn');
-            if (!(filtro instanceof HTMLElement)) {
-                return;
-            }
+            const parent = btn.dataset.parent ?? 'Todas';
+            selectedParent = parent;
 
-            const categoriaSeleccionada = filtro.dataset.categoria ?? 'Todas';
-            const filtros = filtrosContainer.querySelectorAll('.filtro-btn');
-
-            filtros.forEach((btn) => {
-                const isActive = btn === filtro;
-                btn.setAttribute('data-active', String(isActive));
-                btn.setAttribute('aria-pressed', String(isActive));
+            container.querySelectorAll('.parent-btn').forEach((b) => {
+                const isActive = b === btn;
+                b.setAttribute('data-active', String(isActive));
             });
 
-            applyFilter(categoriaSeleccionada);
+            renderSubFilters(parent);
+            applyFilter();
+        });
+    }
+
+    function bindSubFilters() {
+        const container = document.getElementById('sub-filters');
+        if (!container) return;
+
+        container.addEventListener('click', (event) => {
+            const target = event.target;
+            if (!(target instanceof Element)) return;
+            const btn = target.closest('.sub-btn');
+            if (!(btn instanceof HTMLElement)) return;
+
+            const sub = btn.dataset.sub ?? 'Todas';
+            selectedSub = sub;
+
+            container.querySelectorAll('.sub-btn').forEach((b) => {
+                const isActive = b === btn;
+                b.setAttribute('data-active', String(isActive));
+            });
+
+            applyFilter();
         });
     }
 
     function scrollToProductsIfNeeded() {
-        if (window.location.hash !== '#productos') {
-            return;
-        }
-
-        const productosSection = document.getElementById('productos');
-        if (!productosSection) {
-            return;
-        }
-
+        if (window.location.hash !== '#productos') return;
+        const section = document.getElementById('productos');
+        if (!section) return;
         setTimeout(() => {
-            productosSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 80);
     }
 
     function initFiltros() {
-        bindFilters();
+        selectedParent = "Todas";
+        selectedSub = "Todas";
+        bindParentFilters();
         scrollToProductsIfNeeded();
     }
 
     initFiltros();
-
     document.addEventListener('astro:page-load', initFiltros);
 </script>
 
