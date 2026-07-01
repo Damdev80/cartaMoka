@@ -67,7 +67,7 @@ function createComet(container: HTMLElement): void {
     return;
   }
 
-  const durationS = Math.random() * 1 + 1.6;
+  const durationS = Math.random() * 1.5 + 2.5;
   const isMobile = window.innerWidth < 768;
 
   const startY = isMobile
