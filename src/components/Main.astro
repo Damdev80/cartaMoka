@@ -58,6 +58,8 @@ const parentCategories = ["Todas", "Bebidas", "Comidas", "Adiciones"];
 </main>
 
 <script>
+    const STORAGE_KEY = 'mokaFilters';
+
     const parentMap: Record<string, string[]> = {
         "Bebidas": ["Todas", "Bebidas Frías", "Bebidas Calientes", "Más Bebidas"],
         "Comidas": ["Todas", "Hamburguesas", "Pastas", "Panes de la Casa", "Para Acompañar", "Desayunos", "Almuerzos Ejecutivos", "Asados"],
@@ -67,7 +69,30 @@ const parentCategories = ["Todas", "Bebidas", "Comidas", "Adiciones"];
     let selectedParent = "Todas";
     let selectedSub = "Todas";
 
-    function renderSubFilters(parent: string) {
+    function saveFilterState() {
+        try {
+            sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
+                parent: selectedParent,
+                sub: selectedSub
+            }));
+        } catch {}
+    }
+
+    function loadFilterState(): { parent: string; sub: string } {
+        try {
+            const saved = sessionStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                const { parent, sub } = JSON.parse(saved);
+                return {
+                    parent: parent || 'Todas',
+                    sub: sub || 'Todas'
+                };
+            }
+        } catch {}
+        return { parent: 'Todas', sub: 'Todas' };
+    }
+
+    function renderSubFilters(parent: string, activeSub?: string) {
         const container = document.getElementById('sub-filters');
         if (!container) return;
 
@@ -78,6 +103,7 @@ const parentCategories = ["Todas", "Bebidas", "Comidas", "Adiciones"];
         }
 
         const subs = parentMap[parent] || [];
+        const currentSub = activeSub || 'Todas';
         container.classList.remove('hidden');
         container.innerHTML = subs.map((sub) => `
             <button 
@@ -87,13 +113,12 @@ const parentCategories = ["Todas", "Bebidas", "Comidas", "Adiciones"];
                        data-[active=true]:bg-white/[0.15] data-[active=true]:text-white
                        focus:outline-none focus:ring-2 focus:ring-white/20
                        active:scale-95 min-h-10 border border-white/[0.06]"
-                data-active="${sub === 'Todas' ? 'true' : 'false'}"
+                data-active="${sub === currentSub ? 'true' : 'false'}"
             >
                 ${sub}
             </button>
         `).join('');
 
-        selectedSub = 'Todas';
         bindSubFilters();
     }
 
@@ -128,6 +153,15 @@ const parentCategories = ["Todas", "Bebidas", "Comidas", "Adiciones"];
         });
     }
 
+    function updateParentButtons() {
+        const container = document.getElementById('parent-filters');
+        if (!container) return;
+        container.querySelectorAll('.parent-btn').forEach((b) => {
+            const btn = b as HTMLElement;
+            btn.setAttribute('data-active', String(btn.dataset.parent === selectedParent));
+        });
+    }
+
     function bindParentFilters() {
         const container = document.getElementById('parent-filters');
         if (!container || container.dataset.bound === 'true') return;
@@ -141,14 +175,12 @@ const parentCategories = ["Todas", "Bebidas", "Comidas", "Adiciones"];
 
             const parent = btn.dataset.parent ?? 'Todas';
             selectedParent = parent;
+            selectedSub = 'Todas';
 
-            container.querySelectorAll('.parent-btn').forEach((b) => {
-                const isActive = b === btn;
-                b.setAttribute('data-active', String(isActive));
-            });
-
+            updateParentButtons();
             renderSubFilters(parent);
             applyFilter();
+            saveFilterState();
         });
     }
 
@@ -171,6 +203,7 @@ const parentCategories = ["Todas", "Bebidas", "Comidas", "Adiciones"];
             });
 
             applyFilter();
+            saveFilterState();
         });
     }
 
@@ -184,8 +217,13 @@ const parentCategories = ["Todas", "Bebidas", "Comidas", "Adiciones"];
     }
 
     function initFiltros() {
-        selectedParent = "Todas";
-        selectedSub = "Todas";
+        const saved = loadFilterState();
+        selectedParent = saved.parent;
+        selectedSub = saved.sub;
+
+        updateParentButtons();
+        renderSubFilters(selectedParent, selectedSub);
+        applyFilter();
         bindParentFilters();
         scrollToProductsIfNeeded();
     }
