@@ -12,6 +12,10 @@
     "@tailwindcss/vite": "^4.1.18",
     "animejs": "^4.3.5",
     "astro": "^5.16.16",
+    "sharp": "^0.35.3",
     "tailwindcss": "^4.1.18"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["sharp", "esbuild"]
   }
 }

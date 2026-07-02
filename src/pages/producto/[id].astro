@@ -1,5 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { resolveImage } from '../../utils/images';
 
 interface ComboOption {
   name: string;
@@ -10,6 +12,7 @@ interface MokaProduct {
   id: number;
   name: string;
   image: string;
+  resolvedImage?: any;
   price: string;
   categoria: string;
   parentCategory: string;
@@ -334,7 +337,7 @@ export const datas: MokaProduct[] = [
         id: 41,
         name: "Coca cola 400ml",
         image: "",
-        price: "6.000",
+        price: "5.000",
         categoria: "Más Bebidas",
         parentCategory: "Bebidas"
     },
@@ -342,7 +345,7 @@ export const datas: MokaProduct[] = [
         id: 42,
         name: "Cola Roman 400ml",
         image: "",
-        price: "6.000",
+        price: "5.000",
         categoria: "Más Bebidas",
         parentCategory: "Bebidas"
     },
@@ -390,8 +393,7 @@ export const datas: MokaProduct[] = [
         description: "Acompañados de huevo al gusto (Revueltos, Pericos, Revueltos con Jamón, Tortilla de Jamón o Tortilla de Vegetales) y queso costeño.",
         combo: [
             { name: "Con Patacones", price: "15.000" },
-            { name: "Con Arepitas de Queso", price: "15.000" },
-            { name: "Con Pan del Día (Croissan o Pan de mantequilla)", price: "15.000" }
+            { name: "Con Arepitas de Queso", price: "15.000" }
         ]
     },
     // Asados
@@ -458,6 +460,7 @@ export function getStaticPaths() {
 }
 
 const { data } = Astro.props
+const resolvedImg = resolveImage(data.image);
 
 const categoriaColors: Record<string, string> = {
     "Hamburguesas": "bg-amber-500/20 text-amber-400 border-amber-500/30",
@@ -480,7 +483,18 @@ const badgeClass = categoriaColors[data.categoria] || "bg-white/10 text-white/60
     <!-- Imagen hero -->
     <div class="relative w-full overflow-hidden">
       <div class="relative aspect-[4/3] sm:aspect-[16/10] max-h-[65vh]">
-        {data.image ? (
+        {resolvedImg ? (
+          <Image 
+            src={resolvedImg} 
+            alt={data.name} 
+            transition:name={`product-img-${data.id}`}
+            loading="eager"
+            decoding="async"
+            class="w-full h-full object-cover"
+            widths={[400, 800, 1200]}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1200px"
+          />
+        ) : data.image ? (
           <img 
             src={data.image} 
             alt={data.name} 
@@ -555,15 +569,15 @@ const badgeClass = categoriaColors[data.categoria] || "bg-white/10 text-white/60
       <!-- Opciones de Combo -->
       {data.combo && data.combo.length > 0 && (
         <div class="mt-4">
-          <h3 class="text-white/40 font-semibold text-xs uppercase tracking-widest mb-3">Elige tu opción</h3>
-          <div class="flex flex-col gap-2.5">
+          <h3 class="text-white/40 font-semibold text-[11px] uppercase tracking-widest mb-2.5">Elige tu opción</h3>
+          <div class="flex flex-col gap-2">
             {data.combo.map((option) => (
               <button 
-                class="flex justify-between items-center rounded-2xl px-5 py-4 border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.08] hover:border-white/[0.15] active:scale-[0.98] transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50 group"
+                class="flex justify-between items-center rounded-xl px-4 py-3 sm:px-5 sm:py-4 border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.08] hover:border-white/[0.15] active:scale-[0.98] transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50 group"
                 aria-label={`Seleccionar ${option.name} - $${option.price}`}
               >
-                <span class="text-white font-medium text-base group-hover:text-white transition-colors duration-200">{option.name}</span>
-                <span class="text-white/60 font-bold text-base group-hover:text-white transition-colors duration-200">${option.price}</span>
+                <span class="text-white font-medium text-sm sm:text-base group-hover:text-white transition-colors duration-200">{option.name}</span>
+                <span class="text-white/60 font-bold text-sm sm:text-base group-hover:text-white transition-colors duration-200">${option.price}</span>
               </button>
             ))}
           </div>
