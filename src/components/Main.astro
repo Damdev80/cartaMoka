@@ -96,14 +96,8 @@ const parentCategories = ["Bebidas", "Comidas", "Adiciones"];
         const container = document.getElementById('sub-filters');
         if (!container) return;
 
-        if (parent === "Todas") {
-            container.classList.add('hidden');
-            container.innerHTML = '';
-            return;
-        }
-
         const subs = parentMap[parent] || [];
-        const currentSub = activeSub || 'Todas';
+        const currentSub = activeSub || subs[0] || '';
         container.classList.remove('hidden');
         container.innerHTML = subs.map((sub) => `
             <button 
@@ -132,12 +126,10 @@ const parentCategories = ["Bebidas", "Comidas", "Adiciones"];
 
             let show = false;
 
-            if (selectedParent === "Todas") {
-                show = true;
-            } else if (selectedSub === "Todas") {
-                show = parent === selectedParent;
-            } else {
+            if (selectedSub) {
                 show = cat === selectedSub;
+            } else {
+                show = parent === selectedParent;
             }
 
             el.toggleAttribute('hidden', !show);
@@ -173,9 +165,9 @@ const parentCategories = ["Bebidas", "Comidas", "Adiciones"];
             const btn = target.closest('.parent-btn');
             if (!(btn instanceof HTMLElement)) return;
 
-            const parent = btn.dataset.parent ?? 'Todas';
+            const parent = btn.dataset.parent ?? 'Bebidas';
             selectedParent = parent;
-            selectedSub = 'Todas';
+            selectedSub = '';
 
             updateParentButtons();
             renderSubFilters(parent);
@@ -194,7 +186,7 @@ const parentCategories = ["Bebidas", "Comidas", "Adiciones"];
             const btn = target.closest('.sub-btn');
             if (!(btn instanceof HTMLElement)) return;
 
-            const sub = btn.dataset.sub ?? 'Todas';
+            const sub = btn.dataset.sub ?? '';
             selectedSub = sub;
 
             container.querySelectorAll('.sub-btn').forEach((b) => {
