@@ -23,7 +23,6 @@ const resolvedImg = resolveImage(image);
       <Image 
         src={resolvedImg} 
         alt={title} 
-        transition:name={`product-img-${id}`}
         loading="lazy"
         decoding="async"
         width={320}
@@ -36,7 +35,6 @@ const resolvedImg = resolveImage(image);
       <img 
         src={image} 
         alt={title} 
-        transition:name={`product-img-${id}`}
         loading="lazy"
         decoding="async"
         width="320"
@@ -57,13 +55,11 @@ const resolvedImg = resolveImage(image);
     <!-- Info sobre la imagen -->
     <div class="absolute bottom-0 left-0 right-0 p-4">
       <h3 
-        transition:name={`product-title-${id}`}
         class="text-white font-bold text-sm md:text-base leading-tight line-clamp-2"
       >
         {title}
       </h3>
       <p 
-        transition:name={`product-price-${id}`}
         class="text-white/50 font-extrabold text-lg md:text-xl mt-2"
       >
         ${price}
