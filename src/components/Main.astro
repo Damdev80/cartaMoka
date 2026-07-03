@@ -4,12 +4,12 @@ import { datas } from "../pages/producto/[id].astro";
 
 // Mapeo de categorías padre → subcategorías
 const parentMap: Record<string, string[]> = {
-    "Bebidas": ["Todas", "Bebidas Frías", "Bebidas Calientes", "Más Bebidas"],
-    "Comidas": ["Todas", "Hamburguesas", "Pastas", "Panes de la Casa", "Para Acompañar", "Desayunos", "Almuerzos Ejecutivos", "Asados"],
-    "Adiciones": ["Todas", "Adiciones"],
+    "Bebidas": ["Bebidas Frías", "Bebidas Calientes", "Más Bebidas"],
+    "Comidas": ["Hamburguesas", "Pastas", "Panes de la Casa", "Para Acompañar", "Desayunos", "Almuerzos Ejecutivos", "Asados"],
+    "Adiciones": ["Adiciones"],
 };
 
-const parentCategories = ["Todas", "Bebidas", "Comidas", "Adiciones"];
+const parentCategories = ["Bebidas", "Comidas", "Adiciones"];
 ---
 
 <main id="productos" class="w-full min-h-screen bg-tertiary px-4 py-12">
@@ -25,8 +25,8 @@ const parentCategories = ["Todas", "Bebidas", "Comidas", "Adiciones"];
                            data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:shadow-lg
                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-tertiary
                            active:scale-95 min-h-12"
-                    data-active={cat === "Todas" ? "true" : "false"}
-                    aria-pressed={cat === "Todas" ? "true" : "false"}
+                    data-active={cat === "Bebidas" ? "true" : "false"}
+                    aria-pressed={cat === "Bebidas" ? "true" : "false"}
                 >
                     {cat}
                 </button>
@@ -61,13 +61,13 @@ const parentCategories = ["Todas", "Bebidas", "Comidas", "Adiciones"];
     const STORAGE_KEY = 'mokaFilters';
 
     const parentMap: Record<string, string[]> = {
-        "Bebidas": ["Todas", "Bebidas Frías", "Bebidas Calientes", "Más Bebidas"],
-        "Comidas": ["Todas", "Hamburguesas", "Pastas", "Panes de la Casa", "Para Acompañar", "Desayunos", "Almuerzos Ejecutivos", "Asados"],
-        "Adiciones": ["Todas", "Adiciones"],
+        "Bebidas": ["Bebidas Frías", "Bebidas Calientes", "Más Bebidas"],
+        "Comidas": ["Hamburguesas", "Pastas", "Panes de la Casa", "Para Acompañar", "Desayunos", "Almuerzos Ejecutivos", "Asados"],
+        "Adiciones": ["Adiciones"],
     };
 
-    let selectedParent = "Todas";
-    let selectedSub = "Todas";
+    let selectedParent = "Bebidas";
+    let selectedSub = "";
 
     function saveFilterState() {
         try {
@@ -84,12 +84,12 @@ const parentCategories = ["Todas", "Bebidas", "Comidas", "Adiciones"];
             if (saved) {
                 const { parent, sub } = JSON.parse(saved);
                 return {
-                    parent: parent || 'Todas',
-                    sub: sub || 'Todas'
+                    parent: parent || 'Bebidas',
+                    sub: sub || ''
                 };
             }
         } catch {}
-        return { parent: 'Todas', sub: 'Todas' };
+        return { parent: 'Bebidas', sub: '' };
     }
 
     function renderSubFilters(parent: string, activeSub?: string) {
